@@ -21,15 +21,6 @@ jobs:
           rmdir /s /q "C:\Android"
           rmdir /s /q "C:\Program Files (x86)\Android"
 
-          echo Removing NuGet packages cache...
-          rmdir /s /q "%UserProfile%\.nuget"
-
-          echo Removing Python...
-          rmdir /s /q "C:\hostedtoolcache\windows\Python"
-
-          echo Removing Java...
-          rmdir /s /q "C:\hostedtoolcache\windows\Java"
-
       - name: Remove Docker images and clean npm cache (cmd)
         shell: cmd
         run: |
