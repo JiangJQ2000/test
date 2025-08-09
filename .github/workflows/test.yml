@@ -1,0 +1,51 @@
+name: Free up space on Windows Server 2025 runner
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  free-space:
+    runs-on: windows-2025
+    steps:
+      - name: Show initial disk usage
+        shell: bash
+        run: |
+          echo "==== Before cleanup ===="
+          df -h
+
+      - name: Remove large preinstalled software except Visual Studio (cmd)
+        shell: cmd
+        run: |
+          echo Removing Android SDK...
+          rmdir /s /q "C:\Android"
+          rmdir /s /q "C:\Program Files (x86)\Android"
+
+          echo Removing NuGet packages cache...
+          rmdir /s /q "%UserProfile%\.nuget"
+
+          echo Removing Python...
+          rmdir /s /q "C:\hostedtoolcache\windows\Python"
+
+          echo Removing Java...
+          rmdir /s /q "C:\hostedtoolcache\windows\Java"
+
+      - name: Remove Docker images and clean npm cache (cmd)
+        shell: cmd
+        run: |
+          echo Removing Docker images...
+          docker rmi $(docker images -q)
+
+          echo Cleaning npm cache...
+          npm cache clean --force
+
+      - name: Show final disk usage
+        shell: bash
+        run: |
+          echo "==== After cleanup ===="
+          df -h
+
+      - name: Check Python version
+        shell: cmd
+        run: |
+          python -V
