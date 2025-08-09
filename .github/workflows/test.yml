@@ -25,7 +25,7 @@ jobs:
         shell: cmd
         run: |
           echo Removing Docker images...
-          docker rmi $(docker images -q)
+          docker image prune --all --force
 
           echo Cleaning npm cache...
           npm cache clean --force
