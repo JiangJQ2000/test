@@ -20,7 +20,8 @@ jobs:
           echo Removing Android SDK...
           rmdir /s /q "C:\Android"
           rmdir /s /q "C:\Program Files (x86)\Android"
-          rmdir /s /q "%LOCALAPPDATA%\Android\Sdk"
+          echo Removing preinstalled tools at %AGENT_TOOLSDIRECTORY%...
+          rmdir /s /q "%AGENT_TOOLSDIRECTORY%"
 
       - name: Remove Docker images and clean npm cache (cmd)
         shell: cmd
